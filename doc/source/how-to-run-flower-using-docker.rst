@@ -203,14 +203,15 @@ The ``Dockerfile.supernode`` contains the instructions that assemble the SuperNo
   COPY requirements.txt .
   RUN python -m pip install -U --no-cache-dir -r requirements.txt
 
+  # TODO discuss if we want keep copying client.py
   COPY client.py ./
-  ENTRYPOINT ["flower-client-app", "client:app"]
+  ENTRYPOINT ["flower-supernode", "client:app"]
 
 In the first two lines, we instruct Docker to use the SuperNode image tagged ``1.9.0`` as a base
 image and set our working directory to ``/app``. The following instructions will now be
 executed in the ``/app`` directory. Next, we install the ClientApp dependencies by copying the
 ``requirements.txt`` file into the image and run ``pip install``. In the last two lines,
-we copy the ``client.py`` module into the image and set the entry point to ``flower-client-app`` with
+we copy the ``client.py`` module into the image and set the entry point to ``flower-supernode`` with
 the argument ``client:app``. The argument is the object reference of the ClientApp
 (``<module>:<attribute>``) that will be run inside the ClientApp.
 
