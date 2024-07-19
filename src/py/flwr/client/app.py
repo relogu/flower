@@ -236,7 +236,7 @@ def _start_client_internal(
         The maximum duration before the client stops trying to
         connect to the server in case of connection error.
         If set to None, there is no limit to the total time.
-    partitioni_id: Optional[int] (default: None)
+    partition_id: Optional[int] (default: None)
         The data partition index associated with this node. Better suited for
         prototyping purposes.
     persist_client: bool (default: False)
@@ -277,7 +277,7 @@ def _start_client_internal(
 
     app_state_tracker = _AppStateTracker()
 
-    def _on_sucess(retry_state: RetryState) -> None:
+    def _on_success(retry_state: RetryState) -> None:
         app_state_tracker.is_connected = True
         if retry_state.tries > 1:
             log(
@@ -313,27 +313,20 @@ def _start_client_internal(
             if retry_state.tries > 1
             else None
         ),
-        on_success=_on_sucess,
+        on_success=_on_success,
         on_backoff=_on_backoff,
     )
 
     node_state = NodeState(partition_id=partition_id)
 
+    client_app: ClientApp
     if persist_client:
-        print("persisting client init!")
+        log(INFO, "Persisting client initialization!")
         # Load ClientApp
         client_app: ClientApp = load_client_app_fn("", "")
-        # Call client_fn to return the Client obj we want to persist
-        client_that_persists: Client = client_app._client_fn(
-            0, 0
-        )  # TODO: do you care about what gets passed to your client_fn?
-        # Now replace the `client_fn` with one that returns the object above
-
-        def dummy_client_fn(node_id: int, partition_id: Optional[int]):
-            return client_that_persists
 
         def _load_client_app(_1: str, _2: str) -> ClientApp:
-            return ClientApp(client_fn=dummy_client_fn)
+            return client_app
 
         load_client_app_fn = _load_client_app
 
