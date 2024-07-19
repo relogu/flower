@@ -100,6 +100,7 @@ def run_client_app() -> None:
         authentication_keys=authentication_keys,
         max_retries=args.max_retries,
         max_wait_time=args.max_wait_time,
+        persist_client=args.persist_client,
     )
     register_exit_handlers(event_type=EventType.RUN_CLIENT_APP_LEAVE)
 
