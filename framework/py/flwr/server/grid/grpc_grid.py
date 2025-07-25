@@ -291,7 +291,9 @@ class GrpcGrid(Grid):
             if len(msg_ids) == 0:
                 break
             # Sleep
-            time.sleep(3)
+            # time.sleep(3)
+            # NOTE: Reducing this sleep as it may impact very efficient settings
+            time.sleep(0.1)
         return ret
 
     def close(self) -> None:

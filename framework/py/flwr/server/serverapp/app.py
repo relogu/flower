@@ -127,7 +127,9 @@ def run_serverapp(  # pylint: disable=R0914, disable=W0212, disable=R0915
             log(DEBUG, "[flwr-serverapp] Pull ServerAppInputs")
             res: PullServerAppInputsResponse = grid._stub.PullServerAppInputs(req)
             if not res.HasField("run"):
-                sleep(3)
+                # sleep(3)
+                # NOTE: Reducing this sleep as it may impact very efficient settings
+                sleep(0.1)
                 run_status = None
                 continue
 
