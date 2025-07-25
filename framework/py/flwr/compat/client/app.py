@@ -394,7 +394,9 @@ def start_client_internal(
                     # Receive
                     message = receive()
                     if message is None:
-                        time.sleep(3)  # Wait for 3s before asking again
+                        # time.sleep(3)  # Wait for 3s before asking again
+                        # NOTE: Reducing this sleep as it may impact very efficient settings
+                        time.sleep(0.1)  # Wait for 0.1s before asking again
                         continue
 
                     log(INFO, "")
