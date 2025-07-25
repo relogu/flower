@@ -12,13 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Flower File Storage for large objects."""
+"""ClientAppIo API Servicer."""
 
 
-from .disk_ffs import DiskFfs as DiskFfs
-from .ffs import Ffs as Ffs
+from .clientappio_servicer import ClientAppIoServicer
 
 __all__ = [
-    "DiskFfs",
-    "Ffs",
+    "ClientAppIoServicer",
 ]
